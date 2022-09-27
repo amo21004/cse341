@@ -17,10 +17,10 @@ POST http://localhost:3000/listings HTTP/1.1
 GET http://localhost:3000/categories HTTP/1.1
 
 # Same requests but on render
-GET https://naifcse341.onrender.com/listings HTTP/1.1
+GET https://naifcse341-m18l.onrender.com/listings HTTP/1.1
 
-GET https://naifcse341.onrender.com/listings/6332cbd9917ab87b71439f26 HTTP/1.1
+GET https://naifcse341-m18l.onrender.com/listings/6332cbd9917ab87b71439f26 HTTP/1.1
 
-POST https://naifcse341.onrender.com/listings HTTP/1.1
+POST https://naifcse341-m18l.onrender.com/listings HTTP/1.1
 
-GET https://naifcse341.onrender.com/categories HTTP/1.1
+GET https://naifcse341-m18l.onrender.com/categories HTTP/1.1
