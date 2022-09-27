@@ -1,0 +1,72 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Hyderabad's Local Business Directory",
+    "description": "This is the second project for CSE341",
+    "version": "1.0.0"
+  },
+  "host": "naifcse341.onrender.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/listings": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Blue Fox"
+                },
+                "category": {
+                  "example": "6332cbb2917ab87b71439f25"
+                },
+                "location": {
+                  "example": "Banjara Hills"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/listings/{listing_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/categories": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  }
+}
