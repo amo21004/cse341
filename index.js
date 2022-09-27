@@ -33,12 +33,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const url = require("url");
 
-const events = require("events");
-
 const dependencies = {
     db: db,
     url: url,
-    events: events,
     objectId: objectId
 };
 
