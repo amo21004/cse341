@@ -1,7 +1,12 @@
 module.exports = async function (request, response, dependencies) {
-    const categories = [];
+    try {
+        const categories = [];
 
-    await dependencies.db.collection("categories").find().forEach(category => categories.push(category));
+        await dependencies.db.collection("categories").find().forEach(category => categories.push(category));
 
-    response.status(200).send(categories);
+        response.status(200).send(categories);
+    }
+    catch(error) {
+        response.status(500).send(error);
+    }
 };

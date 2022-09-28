@@ -5,9 +5,9 @@
     "description": "This is the second project for CSE341",
     "version": "1.0.0"
   },
-  "host": "naifcse341-m18l.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": ["http"],
   "paths": {
     "/": {
       "get": {

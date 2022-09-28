@@ -1,6 +1,12 @@
+const createError = require('http-errors');
+
+const path = require('path');
+
 const express = require("express");
 
 const app = express();
+
+app.use(express.json());
 
 require("dotenv").config();
 
@@ -21,7 +27,7 @@ const [db, objectId] = require("./services/connection")(
 
 const bodyParser = require("body-parser");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
@@ -33,10 +39,17 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const url = require("url");
 
+const { validationResult, check } = require('express-validator');
+
+const { viewSingleListingValidation, createListingValidation } = require('./services/validation.js')(check);
+
 const dependencies = {
     db: db,
     url: url,
-    objectId: objectId
+    objectId: objectId,
+    validationResult: validationResult,
+    viewSingleListingValidation: viewSingleListingValidation,
+    createListingValidation: createListingValidation
 };
 
 require("./routes")(app, dependencies);

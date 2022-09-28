@@ -6,12 +6,12 @@ module.exports = (app, dependencies) => {
     app.get("/listings", (request, response) => {
         require("../controllers/listings/index")(request, response, dependencies);
     });
-
-    app.get("/listings/:listing_id", (request, response) => {
+    
+    app.get("/listings/:listing_id", dependencies.viewSingleListingValidation, (request, response) => {
         require("../controllers/listings/single")(request, response, dependencies);
     });
 
-    app.post("/listings/", (request, response) => {
+    app.post("/listings", dependencies.createListingValidation, (request, response) => {
         require("../controllers/listings/create")(request, response, dependencies);
     });
 

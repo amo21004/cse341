@@ -1,26 +1,41 @@
-# GET request that gets all the listings
+
+
+### GET request that gets all the listings
 GET http://localhost:3000/listings HTTP/1.1
 
-# GET request that gets a listing with ID 6332cbd9917ab87b71439f26
+### GET request that gets a listing with ID 6332cbd9917ab87b71439f26
 GET http://localhost:3000/listings/6332cbd9917ab87b71439f26 HTTP/1.1
 
-# POT request that adds a new listing
-# Format expected:
-# {
-#     "title": "Blue Fox",
-#     "category": "6332cbb2917ab87b71439f25",
-#     "location": "Banjara Hills"
-# }
+### POST request that adds a new listing
 POST http://localhost:3000/listings HTTP/1.1
+Content-Type: application/json
 
-# GET request that gets all the categories
+{
+     "title": "XYZ",
+     "category": "6332cbb2917ab87b71439f25",
+     "location": "Banjara Hills"
+}
+
+### GET request that gets all the categories
 GET http://localhost:3000/categories HTTP/1.1
 
-# Same requests but on render
+
+
+### Same requests but on render
 GET https://naifcse341-m18l.onrender.com/listings HTTP/1.1
 
+###
 GET https://naifcse341-m18l.onrender.com/listings/6332cbd9917ab87b71439f26 HTTP/1.1
 
+###
 POST https://naifcse341-m18l.onrender.com/listings HTTP/1.1
+Content-Type: application/json
 
+{
+     "title": "XYZ",
+     "category": "6332cbb2917ab87b71439f25",
+     "location": "Banjara Hills"
+}
+
+###
 GET https://naifcse341-m18l.onrender.com/categories HTTP/1.1
