@@ -11,7 +11,7 @@
   "paths": {
     "/": {
       "get": {
-        "description": "Retrives the home page (which doesn't really do anything interesting expect for returning a welcome message)",
+        "description": "Retrives the home page (which does really do anything interesting expect for returning a welcome message)",
         "parameters": [],
         "responses": {}
       }
