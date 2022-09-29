@@ -11,19 +11,26 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Retrives the home page (which doesn't really do anything interesting expect for returning a welcome message)",
         "parameters": [],
         "responses": {}
       }
     },
     "/listings": {
       "get": {
-        "description": "",
+        "description": "Fetches all the listings in the database",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Returns all of the listings that were fetched"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       },
       "post": {
-        "description": "",
+        "description": "Adds a new listing to the database",
         "parameters": [
           {
             "name": "body",
@@ -44,11 +51,86 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Returns ID of the new listing that was added successfully"
+          },
+          "400": {
+            "description": "Either some or all of the required fields are missing or improper"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/listings/{listing_id}": {
       "get": {
+        "description": "Fetches a specific listing by ID provided",
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the fetched listing"
+          },
+          "400": {
+            "description": "Listing ID not provided"
+          },
+          "404": {
+            "description": "No listing matches the given ID"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a specific listing by ID provided",
+        "parameters": [
+          {
+            "name": "listing_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Blue Fox"
+                },
+                "category": {
+                  "example": "6332cbb2917ab87b71439f25"
+                },
+                "location": {
+                  "example": "Banjara Hills"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Listing ID not provided"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
         "description": "",
         "parameters": [
           {
@@ -58,14 +140,148 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Listing deleted successfully"
+          },
+          "400": {
+            "description": "Listing ID not provided"
+          },
+          "404": {
+            "description": "No listing matches the given ID"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/categories": {
       "get": {
-        "description": "",
+        "description": "Fetches all the categories in the database",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Returns all of the categories that were fetched"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Adds a new category to the database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Restaurants"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns ID of the new listing that was added successfully"
+          },
+          "400": {
+            "description": "Either some or all of the required fields are missing or improper"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "get": {
+        "description": "Fetches a specific category by ID provided",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the fetched category"
+          },
+          "400": {
+            "description": "Category ID not provided"
+          },
+          "404": {
+            "description": "No category matches the given ID"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a specific category by ID provided",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "Restaurants"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Category ID not provided"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },      
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category deleted successfully"
+          },
+          "400": {
+            "description": "Category ID not provided"
+          },
+          "404": {
+            "description": "No category matches the given ID"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     }
   }

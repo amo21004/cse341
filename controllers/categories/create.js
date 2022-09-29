@@ -6,9 +6,9 @@ module.exports = async function (request, response, dependencies) {
             return response.status(400).json({ errors: errors.array() });
         }
 
-        const listing = request.body;
+        const category = request.body;
 
-        dependencies.db.collection("listings").insertOne(listing, function (error, result) {
+        dependencies.db.collection("categories").insertOne(category, function (error, result) {
             if (error) {
                 return response.status(500).send("Insert failed");
             }

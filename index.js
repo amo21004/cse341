@@ -41,15 +41,31 @@ const url = require("url");
 
 const { validationResult, check } = require('express-validator');
 
-const { viewSingleListingValidation, createListingValidation } = require('./services/validation.js')(check);
+const {
+    createListingValidation,
+    createCategoryValidation,
+
+    viewSingleListingValidation,
+    viewSingleCategoryValidation,
+    
+    deleteSingleListingValidation,
+    deleteSingleCategoryValidation
+} = require('./services/validation.js')(check);
 
 const dependencies = {
     db: db,
     url: url,
     objectId: objectId,
     validationResult: validationResult,
+
+    createListingValidation: createListingValidation,
+    createCategoryValidation: createCategoryValidation,
+
     viewSingleListingValidation: viewSingleListingValidation,
-    createListingValidation: createListingValidation
+    viewSingleCategoryValidation: viewSingleCategoryValidation,
+
+    deleteSingleListingValidation: deleteSingleListingValidation,
+    deleteSingleCategoryValidation: deleteSingleCategoryValidation
 };
 
 require("./routes")(app, dependencies);
