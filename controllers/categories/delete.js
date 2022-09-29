@@ -16,7 +16,7 @@ module.exports = async function (request, response, dependencies) {
             return;
         }
 
-        response.status(200).send('Deleted contact with ID:' + id);
+        response.status(200).send('Deleted category with ID:' + id);
     }
     catch(error) {
         response.status(500).send(error);
