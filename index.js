@@ -66,22 +66,16 @@ const require_authorization = async (request, response, next) => {
         return next();
     }
 
-    if (request.headers.provider && request.headers.access_token) {
-        request.query.access_token = request.headers.access_token;
-
-        await require('./controllers/authentication/success')(request, response, dependencies, true);
-
-        return next();
-    }
-
-    response.redirect('/authentication');
+    response.status(403).send('Access denied. You need to authorize yourself first.');
 };
 
 const {
     create_listing_validation,
     create_category_validation,
+
     view_single_listing_validation,
     view_single_category_validation,
+
     delete_single_listing_validation,
     delete_single_category_validation
 } = require('./services/validation.js')(check);
@@ -98,8 +92,10 @@ const dependencies = {
 
     create_listing_validation,
     create_category_validation,
+
     view_single_listing_validation,
     view_single_category_validation,
+
     delete_single_listing_validation,
     delete_single_category_validation,
 
@@ -109,5 +105,3 @@ const dependencies = {
 };
 
 require('./routes')(app, dependencies);
-
-// access_token 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

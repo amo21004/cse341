@@ -5,7 +5,7 @@
     "description": "This is the second project for CSE341",
     "version": "1.0.0"
   },
-  "host": "naifcse341-m18l.onrender.com",
+  "host": "naifcse341-p2.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
@@ -16,6 +16,27 @@
         "description": "Retrives the home page (which does really do anything interesting expect for returning a welcome message)",
         "parameters": [],
         "responses": {}
+      }
+    },
+    "/authentication/success": {
+      "get": {
+        "description": "Authorizes access to the API",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorization successful"
+          },
+          "401": {
+            "description": "Authorization failed"
+          }
+        }
       }
     },
     "/listings": {
@@ -34,18 +55,6 @@
       "post": {
         "description": "Adds a new listing to the database",
         "parameters": [
-          {
-            "name": "access_token",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "provider",
-            "in": "header",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
