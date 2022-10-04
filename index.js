@@ -1,71 +1,117 @@
-const createError = require('http-errors');
-
-const path = require('path');
-
-const express = require("express");
+const express = require('express');
 
 const app = express();
 
 app.use(express.json());
 
-require("dotenv").config();
+require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 
 app.listen(port);
 
-const cors = require("cors");
+const cors = require('cors');
 
 app.use(cors());
 
-const MongoClient = require("mongodb");
+const MongoClient = require('mongodb');
 
-const [db, objectId] = require("./services/connection")(
-    process.env.MONGO_URI.replace("dbname", "wdd431"),
+const [db, objectId] = require('./services/connection')(
+    process.env.MONGO_URI.replace('dbname', 'wdd431'),
     MongoClient
 );
 
-const bodyParser = require("body-parser");
+const body_parser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(body_parser.urlencoded({ extended: true }));
 
-app.use(bodyParser.json());
+app.use(body_parser.json());
 
-const swaggerUi = require("swagger-ui-express");
+const github_auth_url = 'https://github.com/login/oauth/authorize?client_id=';
 
-const swaggerDocument = require("./swagger.json");
+const axios = require('axios');
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+var cookie_session = require('cookie-session');
 
-const url = require("url");
+const session_configuration = {
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000
+    }
+};
+
+if (process.env.ENVIRONMENT != 'development') {
+    app.set('trust proxy', 1);
+
+    session_configuration.cookie.secure = true;
+}
+
+app.use(cookie_session(session_configuration));
+
+const swagger_ui = require('swagger-ui-express');
+
+const swagger_document = require('./swagger.json');
+
+app.use('/api-docs', swagger_ui.serve, swagger_ui.setup(swagger_document));
+
+const url = require('url');
 
 const { validationResult, check } = require('express-validator');
 
-const {
-    createListingValidation,
-    createCategoryValidation,
+const require_authorization = async (request, response, next) => {
+    if (request.session.user) {
+        return next();
+    }
 
-    viewSingleListingValidation,
-    viewSingleCategoryValidation,
-    
-    deleteSingleListingValidation,
-    deleteSingleCategoryValidation
+    if (request.headers.provider && request.headers.access_token) {
+        request.query.access_token = request.headers.access_token;
+
+        await require('./controllers/authentication/success')(request, response, dependencies, true);
+
+        return next();
+    }
+
+    response.redirect('/authentication');
+};
+
+const {
+    create_listing_validation,
+    create_category_validation,
+
+    view_single_listing_validation,
+    view_single_category_validation,
+
+    delete_single_listing_validation,
+    delete_single_category_validation
 } = require('./services/validation.js')(check);
 
 const dependencies = {
     db: db,
     url: url,
-    objectId: objectId,
-    validationResult: validationResult,
+    object_id: objectId,
+    validation_result: validationResult,
 
-    createListingValidation: createListingValidation,
-    createCategoryValidation: createCategoryValidation,
+    axios: axios,
 
-    viewSingleListingValidation: viewSingleListingValidation,
-    viewSingleCategoryValidation: viewSingleCategoryValidation,
+    require_authorization,
 
-    deleteSingleListingValidation: deleteSingleListingValidation,
-    deleteSingleCategoryValidation: deleteSingleCategoryValidation
+    create_listing_validation,
+    create_category_validation,
+
+    view_single_listing_validation,
+    view_single_category_validation,
+
+    delete_single_listing_validation,
+    delete_single_category_validation,
+
+    github_auth_url: github_auth_url,
+    github_client_id: process.env.GITHUB_CLIENT_ID,
+    github_client_secret: process.env.GITHUB_CLIENT_SECRET
 };
 
-require("./routes")(app, dependencies);
+require('./routes')(app, dependencies);
+
+// access_token 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

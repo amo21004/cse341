@@ -1,6 +1,6 @@
 module.exports = async function (request, response, dependencies) {
     try {
-        const errors = dependencies.validationResult(request);
+        const errors = dependencies.validation_result(request);
 
         if (!errors.isEmpty()) {
             return response.status(400).json({ errors: errors.array() });
@@ -8,7 +8,7 @@ module.exports = async function (request, response, dependencies) {
 
         const id = request.params.listing_id;
 
-        const listing = await dependencies.db.collection('listings').findOne({ _id: dependencies.objectId(id) });
+        const listing = await dependencies.db.collection('listings').findOne({ _id: dependencies.object_id(id) });
 
         if (!listing) {
             response.status(404).send('No listing matches that ID');
@@ -16,13 +16,13 @@ module.exports = async function (request, response, dependencies) {
             return;
         }
 
-        const category = await dependencies.db.collection('categories').findOne({ _id: dependencies.objectId(listing.category) });
+        const category = await dependencies.db.collection('categories').findOne({ _id: dependencies.object_id(listing.category) });
 
         listing.category_title = category.title;
 
         response.status(200).send(listing);
     }
-    catch(error) {
+    catch (error) {
         response.status(500).send(error);
     }
 };

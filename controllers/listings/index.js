@@ -2,14 +2,14 @@ module.exports = async function (request, response, dependencies) {
     try {
         const listings_raw = [];
 
-        await dependencies.db.collection("listings").find().forEach(listing => listings_raw.push(listing));
+        await dependencies.db.collection('listings').find().forEach(listing => listings_raw.push(listing));
 
         const listings = await Promise.all(listings_raw.map(async listing => {
             const category_id = listing.category;
 
-            const category = await dependencies.db.collection('categories').findOne({ _id: dependencies.objectId(category_id) });
+            const category = await dependencies.db.collection('categories').findOne({ _id: dependencies.object_id(category_id) });
 
-            if(category) {
+            if (category) {
                 listing.category_title = category.title;
             }
 
@@ -18,7 +18,7 @@ module.exports = async function (request, response, dependencies) {
 
         response.status(200).send(listings);
     }
-    catch(error) {
+    catch (error) {
         response.status(500).send(error);
     }
 };

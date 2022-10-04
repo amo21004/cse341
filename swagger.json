@@ -7,7 +7,9 @@
   },
   "host": "naifcse341-m18l.onrender.com",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": [
+    "https"
+  ],
   "paths": {
     "/": {
       "get": {
@@ -33,6 +35,18 @@
         "description": "Adds a new listing to the database",
         "parameters": [
           {
+            "name": "access_token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "provider",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -46,6 +60,18 @@
                 },
                 "location": {
                   "example": "Banjara Hills"
+                },
+                "is_featured": {
+                  "example": true
+                },
+                "phone_number": {
+                  "example": "+91-xxxxxxxxxx"
+                },
+                "email_address": {
+                  "example": "person@domain.com"
+                },
+                "website_url": {
+                  "example": "https://www.domain.com"
                 }
               }
             }
@@ -113,6 +139,18 @@
                 },
                 "location": {
                   "example": "Banjara Hills"
+                },
+                "is_featured": {
+                  "example": true
+                },
+                "phone_number": {
+                  "example": "+91-xxxxxxxxxx"
+                },
+                "email_address": {
+                  "example": "person@domain.com"
+                },
+                "website_url": {
+                  "example": "https://www.domain.com"
                 }
               }
             }
@@ -257,7 +295,7 @@
             "description": "Internal Server Error"
           }
         }
-      },      
+      },
       "delete": {
         "description": "",
         "parameters": [
