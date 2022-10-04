@@ -35,11 +35,19 @@ module.exports = async function (request, response, dependencies, silent = false
             access_token: access_token
         };
 
-        await dependencies.db.collection('users').insertOne({
+        const user = await dependencies.db.collection('users').findOne({
             oauth_provider: 'github',
             oauth_login: result.data.login,
-            oauth_id: result.data.id
+            oauth_id: result.data.id            
         });
+
+        if (!user) {
+            await dependencies.db.collection('users').insertOne({
+                oauth_provider: 'github',
+                oauth_login: result.data.login,
+                oauth_id: result.data.id
+            });
+        }
 
         if (silent === true) {
             return;
