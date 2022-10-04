@@ -80,10 +80,8 @@ const require_authorization = async (request, response, next) => {
 const {
     create_listing_validation,
     create_category_validation,
-
     view_single_listing_validation,
     view_single_category_validation,
-
     delete_single_listing_validation,
     delete_single_category_validation
 } = require('./services/validation.js')(check);
@@ -100,10 +98,8 @@ const dependencies = {
 
     create_listing_validation,
     create_category_validation,
-
     view_single_listing_validation,
     view_single_category_validation,
-
     delete_single_listing_validation,
     delete_single_category_validation,
 
