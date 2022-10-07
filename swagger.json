@@ -10,33 +10,19 @@
   "schemes": [
     "https"
   ],
+  "securityDefinitions": {
+    "oauth": {
+      "type": "oauth2",
+      "authorizationUrl": "/authentication",
+      "flow": "authorizationCode"
+    }
+  },
   "paths": {
     "/": {
       "get": {
         "description": "Retrives the home page (which does really do anything interesting expect for returning a welcome message)",
         "parameters": [],
         "responses": {}
-      }
-    },
-    "/authentication/success": {
-      "get": {
-        "description": "Authorizes access to the API",
-        "parameters": [
-          {
-            "name": "access_token",
-            "in": "query",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Authorization successful"
-          },
-          "401": {
-            "description": "Authorization failed"
-          }
-        }
       }
     },
     "/listings": {
